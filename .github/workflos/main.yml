@@ -1,0 +1,41 @@
+name: Main
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, raspberry-pi]
+    env:
+      BUILD_TYPE: Release
+
+    steps:
+      - name: Set Build Version (Tag)
+        run: echo "build_version=${{  github.ref_name }}" >> $GITHUB_ENV
+        if: ${{ github.ref_type == 'tag' }}
+
+      - name: Set Build Version (Branch)
+        run: echo "build_version=0.0.0-${{  github.run_number }}" >> $GITHUB_ENV
+        if: ${{ github.ref_type == 'branch' }}
+
+      - name: Clean workspace
+        run: |
+          ls -la ./
+          rm -rf ./* || true
+          rm -rf ./.??* || true
+          ls -la ./
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Driver
+        run: |
+          bash build.bash --clean
+          bash build.bash --build -DBUILD_VERSION=${{ env.build_version }}
+
+      - name: Package Driver
+        run: |
+          bash build.bash --package-deb
+
+      - name: Upload Driver Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Driver firmware
+          path: build/*.deb
