@@ -45,6 +45,32 @@ cmake --install build
 
 The `install.sh` script will enable the service automatically.
 
+## Monitoring via MQTT
+
+The dryer publishes a collection fo MQTT topics for monitoring the status of the Raspberry Pi. All topics are relative
+to the device name (i.e. if the device is named `daryl`, the container humidity will be available on `daryl/container/humidity`).
+
+| Topic                | Description                             | Data Type |
+| -------------------- | --------------------------------------- | --------- |
+| `info/total_swap`    | The total swap available, in kilobytes. | Integer   |
+| `info/total_cores`   | The total cores available.              | Integer   |
+| `info/total_memory`  | The total RAM available, in kilobytes.  | Integer   |
+| --                   | --                                      | --        |
+| `status/uptime`      | The uptime of the device, in seconds.   | Integer   |
+| `status/free_swap`   | The free swap, in kilobytes.            | Integer   |
+| `status/free_memory` | The available RAM, in kilobytes.        | Integer   |
+| `status/temperature` | The CPU temperature, in Celsius.        | Float     |
+| `status/load`        | The total CPU load, as a percentage.    | Float     |
+
+Finally, there are some MQTT topics that provide metadata on the device status:
+
+| Topic     | Description                 | Data Type |
+| --------- | --------------------------- | --------- |
+| `version` | The version of this driver. | String    |
+
+It should be noted that the MQTT interface will require all data be encoded as a string; the `Data Type` column above specifies a constraint
+on the values the string can take.
+
 ## Driver Configuration
 
  The behavior of the driver can be driven by a configuration file located at `/etc/rpi-monitor.json`. This file is read in at runtime. If any value is invalid, the entire
