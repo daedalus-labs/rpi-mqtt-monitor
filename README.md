@@ -4,11 +4,11 @@ This project is a C++ based driver for making Raspberry Pi information available
 
 The driver has the following dependencies:
 
-| Library                                                            | Minimum Version |
-| ------------------------------------------------------------------ | --------------- |
-| [`libuv`](https://libuv.org/)                                      | 1.43.0          |
-| [`libspdlog`](https://github.com/gabime/spdlog/wiki)               | 1.9.2           |
-| [`json`](https://github.com/nlohmann/json)                         | 3.11.2          |
+| Library                                              | Minimum Version |
+| ---------------------------------------------------- | --------------- |
+| [`libuv`](https://libuv.org/)                        | 1.43.0          |
+| [`libspdlog`](https://github.com/gabime/spdlog/wiki) | 1.9.2           |
+| [`json`](https://github.com/nlohmann/json)           | 3.11.2          |
 
 ## Build
 
@@ -54,26 +54,17 @@ The `install.sh` script will enable the service automatically.
 
  The JSON file supports the following configuration items:
 
- | Configuration Item  | Type    | Description                                                        | Valid Values                                                 |
- | ------------------- | ------- | ------------------------------------------------------------------ | ------------------------------------------------------------ |
- | `on-threshold`      | Integer | Sets the temperature, in degrees celsius, for turning the fan ON.  | Value must be greater than 0                                 |
- | `off-threshold`     | Integer | Sets the temperature, in degrees celsius, for turning the fan OFF. | Value must be greater than 0, less than `on-threshold` value |
- | `delay`             | Integer | The time, in seconds, between checking the CPU temperature.        | Value must be greater than 0                                 |
- | `brightness`        | Integer | The brightness of the LED.                                         | Value must be greater than 0, less than 31                   |
- | `breath-brightness` | Integer | The max brightness to use when "breathing" the LED.                | Value must be greater than 0, less than 31                   |
- | `blink`             | Integer | The type of LED blink behavior.                                    | Value must in [0, 1, 2]                                      |
- | `output-file`       | string  | The file to which to write monitoring output.                      | Any string is accepted                                       |
- | `force-file`        | string  | The file to check for fan override behavior.                       | Any string is accepted                                       |
+ | Configuration Item | Type   | Description                                      | Valid Values           |
+ | ------------------ | ------ | ------------------------------------------------ | ---------------------- |
+ | `broker`           | string | The IPv4 address or hostname of the MQTT broker. | Any string is accepted |
+ | `name`             | string | The device name for MQTT communication.          | Any string is accepted |
 
 An example of a valid configuration file:
 
  ```json
  {
-    "on-threshold": 65,
-    "off-threshold": 45,
-    "delay": 7,
-    "blink": 1,
-    "output-file": "/home/pi/fanshim.prom"
+    "broker": 65,
+    "name": 45
 }
  ```
 
@@ -81,11 +72,7 @@ An example of a valid configuration file:
 
 If the configuration file is not present or is invalid, the following values will be used:
 
- | Configuration Item  | Default Value                              |
- | ------------------- | ------------------------------------------ |
- | `on-threshold`      | 60                                         |
- | `off-threshold`     | 50                                         |
- | `delay`             | 10                                         |
- | `brightness`        | 0                                          |
- | `breath-brightness` | 10                                         |
- | `blink`             | 0                                          |
+ | Configuration Item | Default Value       |
+ | ------------------ | ------------------- |
+ | `broker`           | "localhost"         |
+ | `name`             | The device hostname |

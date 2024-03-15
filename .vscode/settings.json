@@ -55,6 +55,16 @@
         "ranges": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "chrono": "cpp",
+        "map": "cpp",
+        "ctime": "cpp",
+        "forward_list": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "sstream": "cpp",
+        "valarray": "cpp"
     }
 }
