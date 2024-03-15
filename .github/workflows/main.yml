@@ -2,7 +2,7 @@ name: Main
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: [self-hosted, Linux, raspberry-pi]
+    runs-on: [self-hosted, Linux, arm64]
     env:
       BUILD_TYPE: Release
 
