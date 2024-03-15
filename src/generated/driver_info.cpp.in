@@ -1,0 +1,17 @@
+// clang-format off
+
+#include "driver_info.hpp"
+
+#include <cstdint>
+#include <string>
+
+std::string DriverInfo::version()
+{
+    return "@VERSION@";
+}
+
+uint64_t DriverInfo::buildDate()
+{
+    return @BUILD_TIME@;
+}
+//clang-format on
